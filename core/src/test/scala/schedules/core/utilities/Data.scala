@@ -1,5 +1,4 @@
 package schedules.core.utilities
-
 import scala.io.Source
 import org.scalatest.prop.TableDrivenPropertyChecks._
 

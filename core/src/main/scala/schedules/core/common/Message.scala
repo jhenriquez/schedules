@@ -1,5 +1,3 @@
 package schedules.core.common
 
-trait Message[TResult] {
-  
-}
+trait Message[TResult] { }

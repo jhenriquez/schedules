@@ -4,6 +4,7 @@ import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.prop.TableDrivenPropertyChecks._
 import org.scalatest.matchers.should.Matchers
+import schedules.core.common.repositories.CSVSampleDataRepository
 
 class ListAvailableCoachesSpec extends AnyFeatureSpec with GivenWhenThen with Matchers {
     info ("As a user");
@@ -21,16 +22,15 @@ class ListAvailableCoachesSpec extends AnyFeatureSpec with GivenWhenThen with Ma
 
             When ("A user requests to see a list of avaible coaches")
             val listAvailableCoaches = ListAvailableCoaches()
-            val result = ListAvailableCoachesHandler.execute(listAvailableCoaches)
+
+            // TODO: Construct the handler using some kind of DI container or technique.
+            val coaches = new ListAvailableCoachesHandler(new CSVSampleDataRepository).execute(listAvailableCoaches)
 
             Then ("A list of the following coaches should be produced")
             info ("| coach |")
             availableNames.foreach((coach) => info (s"| $coach |"))
 
-            result match {
-                case Left(value) => fail()
-                case Right(names) => names should contain (availableNames)
-            }
+            coaches.map(_.name) should equal (availableNames)
         }
     }
 }
