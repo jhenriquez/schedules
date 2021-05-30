@@ -5,6 +5,7 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.prop.TableDrivenPropertyChecks._
 import org.scalatest.matchers.should.Matchers
 import schedules.core.common.repositories.CSVSampleDataRepository
+import schedules.core.tests.utilities.Data
 
 class ListAvailableCoachesSpec extends AnyFeatureSpec with GivenWhenThen with Matchers {
     info ("As a user");
@@ -13,7 +14,7 @@ class ListAvailableCoachesSpec extends AnyFeatureSpec with GivenWhenThen with Ma
     Feature ("List available coaches") {
         Scenario ("User requests to see a list of avaible coaches") {
             Given ("The following configured schedules")
-            val availableData = schedules.core.utilities.Data.getAvailableData()
+            val availableData = Data.getAvailableData()
             val availableNames = availableData.groupBy(coach => coach._1).map { case (coach, _) => coach }
 
             forAll(availableData)((coach, timezone, weekday, availableAt, availableUntil) => {
